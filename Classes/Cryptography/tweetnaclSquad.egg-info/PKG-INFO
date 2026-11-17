@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: tweetnaclSquad
+Version: 0.2
+Summary: Python wrapper for TweetNaCl
+Author: Brian Warner, Jan Mojžíš
+Dynamic: author
+Dynamic: summary

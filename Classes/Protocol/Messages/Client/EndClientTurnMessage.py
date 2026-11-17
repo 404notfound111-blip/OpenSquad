@@ -49,6 +49,7 @@ class EndClientTurnMessage(PiranhaMessage):
             if "instance" not in command: continue
 
             command["instance"].execute(receiver)
+        receiver["ClientConnection"].db.savePlayer(receiver["Player"])
 
 
     def getMessageType(self):

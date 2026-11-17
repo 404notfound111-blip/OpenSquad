@@ -2,6 +2,7 @@ import sqlite3, json, traceback
 from threading import Lock
 from typing import Union
 
+
 class SQLiteManager:
     def __init__(self):
         """Creates an instance of SQLiteManager and prepares the database"""
@@ -30,7 +31,8 @@ class SQLiteManager:
         if acMutex: self.mutex.acquire()
         try:
             self.cursor.execute("SELECT data FROM playerTable WHERE accountToken = ?", (auth,))
-            return json.loads(self.cursor.fetchone()[0])
+            row = self.cursor.fetchone()
+            return json.loads(row[0]) if row else None
         except (sqlite3.ProgrammingError, Exception) as e:
             print(f"An exception has occurred while trying to get an entry. Error: {e}")
         finally:
@@ -45,18 +47,41 @@ class SQLiteManager:
                     entry = data
                     auth = data["token"]
 
+                if entry is None:
+                    print(f"[SQLiteManager::] updateEntry: no entry found for token {auth}")
+                    return
+
                 if isinstance(item, list):
-                    for i, key in enumerate(list): entry[key] = value[i]
+                    for i, key in enumerate(item): entry[key] = value[i]  # war: enumerate(list) -> Bug
                 else:
                     entry[item] = value
 
-                entry = {key: value for key, value in entry.items() if value not in [None, "", {}, [], False, 0]}
+                # Nur None entfernen. Vorher wurden auch 0, [], False usw. gelöscht,
+                # dadurch gingen z.B. leere Listen/Nullwerte beim Speichern verloren.
+                entry = {k: v for k, v in entry.items() if v is not None}
 
                 self.cursor.execute("UPDATE playerTable SET data = ? WHERE accountToken = ?", (json.dumps(entry, ensure_ascii=False), auth,))
                 self.connection.commit()
             except (sqlite3.ProgrammingError, Exception) as e:
-                print(traceback.print_exc())
+                traceback.print_exc()
                 print(f"An exception has occurred while trying to save an entry. Error: {e}")
+
+    def savePlayer(self, player):
+        """Schreibt den kompletten Spielstand. Legt den Eintrag an, falls es noch keinen gibt."""
+        if not player.accountToken or not player.accountID:
+            return
+        data = player.toDict()
+        with self.mutex:
+            try:
+                payload = json.dumps(data, ensure_ascii=False)
+                self.cursor.execute("UPDATE playerTable SET data = ? WHERE accountToken = ?", (payload, player.accountToken))
+                if self.cursor.rowcount == 0:
+                    self.cursor.execute("INSERT INTO playerTable (high, low, accountToken, data) VALUES (?, ?, ?, ?)",
+                                        (*data["id"], player.accountToken, payload))
+                self.connection.commit()
+            except Exception as e:
+                traceback.print_exc()
+                print(f"An exception has occurred while trying to save the player. Error: {e}")
 
     def incrementID(self):
         with self.mutex:

@@ -1,0 +1,8 @@
+randombytes.c
+setup.py
+tweetnacl.c
+tweetnaclmodule.c
+tweetnaclSquad.egg-info/PKG-INFO
+tweetnaclSquad.egg-info/SOURCES.txt
+tweetnaclSquad.egg-info/dependency_links.txt
+tweetnaclSquad.egg-info/top_level.txt

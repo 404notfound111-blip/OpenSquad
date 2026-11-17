@@ -12,7 +12,7 @@ class LogicUnlockCharacterCommand(LogicCommand):
 
     def execute(self, receiver):
         receiver["Player"].members.append({"id": self.character})
-        receiver["ClientConnection"].db.updateEntry("members", receiver["Player"].members, receiver["Player"].accountToken)
+        receiver["ClientConnection"].db.savePlayer(receiver["Player"])
 
     def getCommandType(self):
         return 531

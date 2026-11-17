@@ -44,7 +44,7 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeVInt(receiver["Player"].resources[0]["val"]) # Diamonds Count
             self.writeVInt(0)
             self.writeVInt(0)
-            self.writeVInt(0) # Trophies Amount
+            self.writeVInt(receiver["Player"].trophies) # Trophies Amount
 
             self.writeVInt(3) # Commodity Count
 
