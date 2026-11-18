@@ -11,6 +11,13 @@ class GoHomeMessage(PiranhaMessage):
         print(f"bool: {self.readBoolean()}")
 
     def execute(self, receiver):
+        player = receiver["Player"]
+        if player.inBattle:
+            player.inBattle = False
+            player.applyBattleReward()
+            receiver["ClientConnection"].db.savePlayer(player)
+            print("[GoHomeMessage::] Battle reward granted and saved")
+
         keep = OwnHomeDataMessage()
         receiver["ClientConnection"].messaging.send(receiver, keep)
 

@@ -39,12 +39,17 @@ class Connection(Thread):
     def run(self):
         try:
             while self.isAlive:
-                PacketHeader = self.client.recv(7)
+                PacketHeader = self.recv(7)
+                if len(PacketHeader) == 0:
+                    print('[Connection::] Client closed the connection')
+                    self.disconnect()
+                    break
                 if len(PacketHeader) == 7:
                     header: tuple = self.messaging.readHeader(PacketHeader)
                     self.PacketTimeout: float = time.time()
 
                     PacketID, PacketLength = header
+                    print(f'[Connection::] Header {bytes(PacketHeader).hex()} -> packet {PacketID}, length {PacketLength}')
                     PacketPayload: Union[bytes, bytearray] = self.messaging.PepperCrypto.decrypt(PacketID, bytes(self.recv(PacketLength)))
                             
                     self.messageManager.receiveMessage(PacketID, PacketPayload)

@@ -19,6 +19,7 @@ class EndClientTurnMessage(PiranhaMessage):
         self.checksum = self.readInt()
 
         self.commandsCount = self.readVInt()
+        if self.commandsCount > 0: print(f'[EndClientTurnMessage::] RAW {bytes(self.payload).hex()}')
         if self.commandsCount > 512:
             Debugger.error("EndClientTurn::decode() command count is too high! (%d)".format(self.commandsCount))
             return
@@ -28,6 +29,14 @@ class EndClientTurnMessage(PiranhaMessage):
             if LogicCommandManager.isServerToClient(commandID): continue
 
             self.commands.append({"id": commandID})
+
+            if commandID == 517:
+                from Classes.Protocol.Commands.Client.LogicClaimMilestoneCommand import LogicClaimMilestoneCommand
+                commandInstance = LogicClaimMilestoneCommand(self.payload)
+                print('[EndClientTurnMessage::] Created command with type: 517, LogicClaimMilestoneCommand')
+                commandInstance.decode(self)
+                self.commands[-1]['instance'] = commandInstance
+                continue
 
             if LogicCommandManager.commandExists(commandID):
                 commandInstance = LogicCommandManager.createCommand(commandID)

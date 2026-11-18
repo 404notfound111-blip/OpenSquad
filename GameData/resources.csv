@@ -1,0 +1,17 @@
+"Name","TID","GraphicsAsset","IconAsset","StartingAmount","MaxCapacity","FlyStartSound","FlyEndSound","RequiresTarget","IsInChronos","ChronosIconAsset","TextColor"
+"string","string","string","string","int","int","string","string","boolean","boolean","string","string"
+"Diamonds","TID_DIAMONDS",,"sc/ui.sc#icon_diamond",10,,"Fly_Diamond","Get_Diamond",,"true","sc/ui.sc#shop_special_offer_diamond_slot","0xFF8060c2"
+"Gold","TID_GOLD","sc3d/items_glitter.glb#coin","sc/ui.sc#icon_coin",5000,500000,"Fly_Coin","Get_Coin",,"true","sc/ui.sc#shop_special_offer_coin_slot","0xFFf0cd4e"
+"Stars","TID_STARS",,"sc/ui.sc#icon_star",,,,,,,,
+"Trophies","TID_TROPHIES",,"sc/ui.sc#icon_trophy",,,"Fly_Trophy","Get_Trophy",,,,
+"UnlockTokens","TID_UNLOCK_TOKENS",,"sc/ui.sc#icon_character_token",,150,"Fly_Unlock_Orb","Get_Unlock_Orb",,,,"0xFFe474c5"
+"PowerTokens","TID_POWER_POINTS",,"sc/ui.sc#icon_powerpoints",,,"Fly_PowerToken","Get_PowerToken","true","true","sc/ui.sc#shop_special_offer_powerpoints_slot","0xFFe73ef0"
+"Gems","TID_GEMS","sc3d/items_glitter.glb#gem","sc/ui.sc#icon_gem",,,"Fly_Gem","Get_Gem",,"true",,"0xFF7ff64b"
+"Mineral1","TID_MINERAL1",,"sc/ui.sc#mineral1",,,,,,,,
+"Mineral2","TID_MINERAL2",,"sc/ui.sc#mineral2",,,,,,,,
+"Mineral3","TID_MINERAL3",,"sc/ui.sc#mineral3",,,,,,,,
+"FreeGold","TID_GOLD","sc3d/items_glitter.glb#coin","sc/ui.sc#icon_coin",,,"Fly_Coin","Get_Coin",,,,"0xFFf0cd4e"
+"AvatarExp","TID_AVATAR_EXP",,"sc/ui.sc#icon_exp",,,"Fly_UnlockToken","Get_UnlockToken",,,,"0xFF6ad1fb"
+"Cosmetic","TID_COSMETIC",,"sc/ui.sc#icon_cosmetic_currency",,,"Fly_Style_Ticket","Get_Style_Ticket",,"true","sc/ui.sc#shop_special_offer_cosmetic_slot",
+"USE_ME_IN_FUTURE",,,,,,,,,,,
+"RerollTokens","TID_REROLL_TOKEN",,"sc/ui.sc#reroll_currency",,99,,"Reroll_Dice_Pickup",,"true","sc/ui.sc#shop_special_offer_reroll_slot",
