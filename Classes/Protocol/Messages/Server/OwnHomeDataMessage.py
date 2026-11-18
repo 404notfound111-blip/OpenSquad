@@ -5,6 +5,7 @@ from Classes.Logic.LogicRandom import LogicRandom
 from Classes.Logic.Reflectable.LogicCharacterEntry import LogicCharacterEntry
 from Classes.Logic.Reflectable.LogicQuestEntry import LogicQuestEntry
 from Classes.Logic.Reflectable.LogicShopEntry import LogicShopEntry
+from Classes.Utilities import ShopGenerator
 from Classes.Logic.Reflector.LogicJSONOutReflector import LogicJSONOutReflector
 from Classes.Logic.Reflector.LogicRawOutReflector import LogicRawOutReflector
 from Classes.Protocol.PiranhaMessage import PiranhaMessage
@@ -24,7 +25,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeHexa("02 E7 11 89 D4 61 92 D4 61 95 D4 61 96 D4 61 AE D4 61 80 D4 61 81 D4 61 82 D4 61 83 D4 61 84 D4 61 87 D4 61 90 D4 61 93 D4 61 A0 D4 61 86 D4 61 88 D4 61 A6 D4 61 04 A9 CB C9 02 A2 CB C9 02 A0 CB C9 02 A6 CB C9 02 00 00 00 17 64 73 32 5F 45 78 70 4C 65 61 67 75 65 47 72 61 73 73 6C 61 6E 64 73 8B BE 92 01 94 C6 0A A0 EE 6D 11 89 D4 61 92 D4 61 95 D4 61 96 D4 61 AE D4 61 80 D4 61 81 D4 61 82 D4 61 83 D4 61 84 D4 61 87 D4 61 90 D4 61 93 D4 61 A0 D4 61 86 D4 61 88 D4 61 A6 D4 61 04 A9 CB C9 02 A2 CB C9 02 A0 CB C9 02 A6 CB C9 02 00 00 00 1A 64 73 31 44 75 6F 5F 45 78 70 4C 65 61 67 75 65 47 72 61 73 73 6C 61 6E 64 73 8F BE 92 01 94 C6 0A A0 EE 6D")
 
         self.writeBoolean(False)
-        self.writeString(self.reflectJSON(receiver["Player"], receiver["ClientConnection"].serverSession.preloader.offers))
+        self.writeString(self.reflectJSON(receiver["Player"], ShopGenerator.buildOffers(receiver["Player"], receiver["ClientConnection"].serverSession.preloader.offers)))
 
         self.writeLongLong(*receiver["Player"].accountID)
         self.writeLongLong(*receiver["Player"].accountID)

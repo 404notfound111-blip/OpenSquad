@@ -61,3 +61,29 @@ def milestoneReward(milestoneID: int):
         "amount": int(amount) if amount.isdigit() else 0,
         "character": row.get("Character") or "",
     }
+
+
+def characterNameById(characterID: int):
+    rows = _rows("characters.csv")
+    if 0 <= characterID < len(rows):
+        return rows[characterID].get("Name")
+    return None
+
+
+def namedRows(csvName: str) -> list:
+    """[(Index, Zeile)] nur für Zeilen mit Namen. Zeilen ohne Namen sind Fortsetzungen
+    der Zeile davor und zählen nicht mit (außer RewardConfig.COUNT_BLANK_ROWS = True)."""
+    from Classes.Utilities import RewardConfig as R
+    result, count = [], 0
+    for raw, row in enumerate(_rows(csvName)):
+        if row.get("Name"):
+            result.append((raw if R.COUNT_BLANK_ROWS else count, row))
+            count += 1
+    return result
+
+
+def dealIndex(dealName: str) -> int:
+    for idx, row in namedRows("deals.csv"):
+        if row.get("Name") == dealName:
+            return idx
+    return 0

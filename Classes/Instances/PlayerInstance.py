@@ -126,3 +126,5 @@ class PlayerInstance:
         self.addResource(R.COINS_RESOURCE_ID, R.COINS_PER_BATTLE)
         if R.ORBS_RESOURCE_ID is not None:
             self.addResource(R.ORBS_RESOURCE_ID, R.ORBS_PER_BATTLE)
+        if getattr(R, "COSMETIC_PER_BATTLE", 0) > 0:
+            self.addResource(R.COSMETIC_RESOURCE_ID, R.COSMETIC_PER_BATTLE)
