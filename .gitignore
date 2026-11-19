@@ -1,0 +1,7 @@
+﻿__pycache__/
+*.pyc
+Classes/DataBase/players.sqlite
+GameData/
+*.log
+dump*.txt
+rawlisten.py

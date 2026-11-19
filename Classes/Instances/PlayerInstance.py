@@ -122,6 +122,7 @@ class PlayerInstance:
 
     def applyBattleReward(self):
         from Classes.Utilities import RewardConfig as R
+        self.expTokens += getattr(R, "EXP_PER_BATTLE", 0)
         self.addResource(0, R.GEMS_PER_BATTLE)
         self.addResource(R.COINS_RESOURCE_ID, R.COINS_PER_BATTLE)
         if R.ORBS_RESOURCE_ID is not None:

@@ -1,6 +1,9 @@
 # Einstellungen für Belohnungen nach einem Kampf.
 # Speicherort: Classes/Utilities/RewardConfig.py
 
+# XP für den Weltenpfad (Meilensteine brauchen Exp 2, 3, 4 ... 100 laut exp_milestones.csv)
+EXP_PER_BATTLE = 3
+
 # Diamanten ("Diamonds Count" im Home-Paket = resources[0])
 GEMS_PER_BATTLE = 100
 
