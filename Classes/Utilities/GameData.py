@@ -36,6 +36,13 @@ def characterIdByName(name: str):
     return _indexByName("characters.csv", name)
 
 
+def characterNameById(characterID: int):
+    rows = _rows("characters.csv")
+    if 0 <= characterID < len(rows):
+        return rows[characterID].get("Name")
+    return None
+
+
 def resourceCap(resourceID: int):
     rows = _rows("resources.csv")
     if 0 <= resourceID < len(rows):
@@ -63,13 +70,6 @@ def milestoneReward(milestoneID: int):
     }
 
 
-def characterNameById(characterID: int):
-    rows = _rows("characters.csv")
-    if 0 <= characterID < len(rows):
-        return rows[characterID].get("Name")
-    return None
-
-
 def namedRows(csvName: str) -> list:
     """[(Index, Zeile)] nur für Zeilen mit Namen. Zeilen ohne Namen sind Fortsetzungen
     der Zeile davor und zählen nicht mit (außer RewardConfig.COUNT_BLANK_ROWS = True)."""
@@ -87,3 +87,39 @@ def dealIndex(dealName: str) -> int:
         if row.get("Name") == dealName:
             return idx
     return 0
+
+
+def dealRow(dealName: str) -> dict:
+    for idx, row in namedRows("deals.csv"):
+        if row.get("Name") == dealName:
+            return row
+    return {}
+
+
+# ---- XP-Stufen (exp_levels.csv: Name = Stufe, ExpToNextLevel) ----
+def expToNextLevel(level: int) -> int:
+    for row in _rows("exp_levels.csv"):
+        if row.get("Name") == str(level):
+            try:
+                return int(row.get("ExpToNextLevel") or 0)
+            except ValueError:
+                return 500
+    return 500
+
+
+def maxExpLevel() -> int:
+    levels = [int(r["Name"]) for r in _rows("exp_levels.csv") if (r.get("Name") or "").isdigit()]
+    return max(levels) if levels else 100
+
+
+# ---- Skinpreis ----
+def skinPrice(skinIdx: int) -> int:
+    for idx, row in namedRows("skins.csv"):
+        if idx == skinIdx:
+            if row.get("CosmeticPrice"):
+                try:
+                    return int(row["CosmeticPrice"])
+                except ValueError:
+                    pass
+            return {"1": 1500, "2": 2000}.get(row.get("Rarity"), 1000)
+    return 1000

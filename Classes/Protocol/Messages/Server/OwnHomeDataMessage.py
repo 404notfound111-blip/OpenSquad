@@ -39,7 +39,7 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeVInt(receiver["Player"].registrationState) # State
             self.writeBoolean(True) # Enables Tutorial State
             self.writeLongLong(0, 1) # Age ?
-            self.writeVInt(2) # EXP League Level
+            self.writeVInt(receiver["Player"].expLevel) # EXP League Level
             self.writeVInt(receiver["Player"].expTokens) # EXP League Tokens Collected
             self.writeStringReference("Male")
             self.writeVInt(receiver["Player"].resources[0]["val"]) # Diamonds Count
@@ -102,7 +102,8 @@ class OwnHomeDataMessage(PiranhaMessage):
             reflected.reflectExitArray()
 
         # LABEL_30
-        if reflected.reflectArray(0, "emos") != 0:
+        if reflected.reflectArray(1 if player.pins else 0, "emos") != 0:
+            reflected.reflectNextInt(player.pins)
             reflected.reflectExitArray()
 
         if reflected.reflectArray(0, "newEmos") != 0:

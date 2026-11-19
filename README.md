@@ -8,7 +8,8 @@
 - Home
 - Account Creation
 - Setting Player Name
-- You can play battles, but progression will not be saved
+- You can play battles
+- progression will be saved
 
 ## Setup Process
 To use this server, you need a pre-patched client which you can get [here](https://mega.nz/file/vscRxA6R#b4-RQ90YB9SqjCDKr_JkgawVDZ8TF6E2F0DCp3aVaFo). The client is set to connect locally by default, but the script's (`libhaccycat.so`) not compiled - so you're free to host servers.

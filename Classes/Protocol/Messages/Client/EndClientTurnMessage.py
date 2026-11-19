@@ -30,10 +30,10 @@ class EndClientTurnMessage(PiranhaMessage):
 
             self.commands.append({"id": commandID})
 
-            if commandID == 517:
-                from Classes.Protocol.Commands.Client.LogicClaimMilestoneCommand import LogicClaimMilestoneCommand
-                commandInstance = LogicClaimMilestoneCommand(self.payload)
-                print('[EndClientTurnMessage::] Created command with type: 517, LogicClaimMilestoneCommand')
+            if commandID in (505, 517, 535, 536, 540):
+                from Classes.Protocol.Commands.Client.LogicSimpleCommands import LogicSimpleCommand
+                commandInstance = LogicSimpleCommand(self.payload, commandID)
+                print(f'[EndClientTurnMessage::] Created command with type: {commandID}, LogicSimpleCommand')
                 commandInstance.decode(self)
                 self.commands[-1]['instance'] = commandInstance
                 continue
